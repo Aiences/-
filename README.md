@@ -1,4 +1,4 @@
-# vue-cli3-tpl
+# data-visualization
 
 ## Project setup
 ```
@@ -15,12 +15,15 @@ npm run serve
 npm run build
 ```
 
+### Run your unit tests
+```
+npm run test:unit
+```
+
 ### Lints and fixes files
 ```
 npm run lint
 ```
 
-### Author
-```
-wwj
-```
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

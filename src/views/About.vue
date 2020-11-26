@@ -10,18 +10,20 @@
 import { defineComponent } from "vue";
 import ColumnList, { ColumnProps } from "@/components/ColumnList.vue";
 import Header, { UserProps } from "@/components/Header.vue";
-const columnList: ColumnProps = [
-  {
-    id: 10,
-    title: "我的文章",
-    describe: "文章描述",
-  },
-  {
-    id: 11,
-    title: "我的文章",
-    describe: "文章描述",
-  },
-];
+const columnList: ColumnProps[] =
+  [
+    {
+      id: 10,
+      title: "我的文章",
+      describe: "文章描述",
+    },
+    {
+      id: 11,
+      title: "我的文章",
+      describe: "文章描述",
+    },
+  ]
+
 const userInfo: UserProps = {
   isLogin: true,
   name: "wwj",

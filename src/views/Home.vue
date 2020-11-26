@@ -14,10 +14,11 @@
 <script lang="ts">
 import { ref, computed, reactive, toRefs } from "vue";
 import useMousePosition from "@/hooks/useMousePosition";
+
 interface DataProps {
   count: number;
   double: number;
-  increase: () => void;
+  increase: () => void; //void 是js保留关键字，可以是任意类型，该关键字指定要计算一个表达式但是不返回值
   numbers: number[];
   person: {
     name?: string;

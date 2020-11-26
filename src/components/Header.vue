@@ -10,18 +10,14 @@
       </li>
     </ul>
 
-    <ul v-else class="list-inline">
-      <li class="list-inline-item">
-        <a href="#" class="btn btn-outline-light my-2">
-          你好！{{ userInfo.name }}
-        </a>
-      </li>
-    </ul>
+    <drop-down v-else :title="title"> </drop-down>
   </nav>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref } from "vue";
+import DropDown from "@/components/DropDown.vue"
+
 export interface UserProps {
   isLogin: boolean;
   name?: string;
@@ -35,6 +31,17 @@ export default defineComponent({
       type: Object as PropType<UserProps>,
       required: true,
     },
+  },
+  components: {
+    DropDown
+  },
+  setup(props) {
+    const title = ref("你好！" + props.userInfo.name)
+
+    return {
+      title
+    }
+
   },
 });
 </script>

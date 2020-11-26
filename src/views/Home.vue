@@ -8,12 +8,17 @@
     </ul>
     <h1>{{ person.name }}</h1>
     <button @click="increase">+1</button>
+    <Model :isOpenModel="isOpenModel" @close-model="closeModel"
+      >我是一个弹框</Model
+    >
+    <button @click="openModel">打开弹框</button>
   </div>
 </template>
 
 <script lang="ts">
 import { ref, computed, reactive, toRefs } from "vue";
 import useMousePosition from "@/hooks/useMousePosition";
+import Model from "@/components/Model.vue"
 
 interface DataProps {
   count: number;
@@ -26,6 +31,9 @@ interface DataProps {
 }
 export default {
   name: "Home",
+  components: {
+    Model
+  },
   setup() {
     //在模板中引用时，vue会自动对应ref对象的value值
     // const count = ref(1); //ref() 返回的是一个对象,传入的参数为原始值类型
@@ -57,11 +65,23 @@ export default {
     data2.person.name = "wwj";
 
     const refDatas = toRefs(data2);
+    const isOpenModel = ref(false)
+
+    const closeModel = () => {
+      isOpenModel.value = false
+    }
+
+    const openModel = () => {
+      isOpenModel.value = true
+    }
 
     return {
       ...refDatas,
       x,
       y,
+      isOpenModel,
+      openModel,
+      closeModel
     };
   },
 };

@@ -1,42 +1,40 @@
 <template>
   <div class="container">
-    <form>
-      <div class="form-group">
-        <label for="exampleInputEmail1">email</label>
-        <validate-input
-          :rules="rules"
-          v-model="initValue"
-          type="text"
-          class="input-box"
-        ></validate-input>
-      </div>
+    <validate-form @do-submit="doSubmit">
+      <template #header>
+        <div class="form-group">
+          <label for="exampleInputEmail1">email</label>
+          <validate-input
+            :rules="rules"
+            v-model="initValue"
+            type="text"
+          ></validate-input>
+        </div>
 
-      <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          id="exampleInputPassword1"
-        />
-      </div>
-      <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <validate-input
+            :rules="passwordRules"
+            v-model="pdValue"
+            type="password"
+          ></validate-input>
+        </div>
+      </template>
+    </validate-form>
   </div>
 </template>
 
 <script lang="ts">
 import ValidateInput, { RulesProp } from "@/components/ValidateInput.vue";
 import { defineComponent, reactive, ref } from "vue";
+import ValidateForm from "@/components/ValidateForm.vue";
 
 export default defineComponent({
-  components: { ValidateInput },
+  components: { ValidateInput, ValidateForm },
   name: "Login",
   setup() {
     const initValue = ref("test");
+    const pdValue = ref("");
     const rules: RulesProp = [
       {
         type: "required",
@@ -48,16 +46,31 @@ export default defineComponent({
       },
     ];
 
+    const passwordRules: RulesProp = [
+      {
+        type: "required",
+        message: "请输入密码",
+      },
+      {
+        type: "space",
+        message: "密码长度不少于5个字符",
+      },
+    ];
+
+    const doSubmit = (val: boolean) => {
+      console.log(val, "========");
+    };
+
     return {
       rules,
+      passwordRules,
       initValue,
+      pdValue,
+      doSubmit,
     };
   },
 });
 </script>
 
 <style scoped>
-.input-box {
-  border-radius: 4px;
-}
 </style>

@@ -4,7 +4,6 @@
       class="form-control"
       :value="inputRef.value"
       @input="updateValue"
-      v-model="inputRef.value"
       @blur="validateInput"
       v-bind="$attrs"
     />
@@ -17,7 +16,7 @@
 import { defineComponent, PropType, reactive, Ref, ref, toRefs } from "vue";
 
 interface RuleProp {
-  type: "required" | "email"; //可配置
+  type: "required" | "email" | "space"; //可配置
   message: string;
 }
 const pattern = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/; //校验邮箱规则
@@ -57,6 +56,9 @@ export default defineComponent({
               break;
             case "email":
               pass = pattern.test(inputRef.value);
+              break;
+            case "space":
+              pass = inputRef.value.length >= 5;
               break;
 
             default:

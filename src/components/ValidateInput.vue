@@ -13,7 +13,16 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, reactive, Ref, ref, toRefs } from "vue";
+import {
+  defineComponent,
+  onMounted,
+  PropType,
+  reactive,
+  Ref,
+  ref,
+  toRefs,
+} from "vue";
+import { emitter } from "@/components/ValidateForm.vue";
 
 interface RuleProp {
   type: "required" | "email" | "space"; //可配置
@@ -31,7 +40,6 @@ export default defineComponent({
     modelValue: String,
   },
   setup(props, context) {
-    console.log(context.attrs);
     const inputRef = reactive({
       value: props.modelValue || "",
       error: false,
@@ -45,6 +53,7 @@ export default defineComponent({
       context.emit("update:modelValue", textValue);
     };
 
+    //校验规则
     const validateInput = () => {
       if (props.rules) {
         const allPassed = props.rules.every((rule) => {
@@ -67,8 +76,14 @@ export default defineComponent({
           return pass;
         });
         inputRef.error = !allPassed;
+        return allPassed;
       }
     };
+
+    onMounted(() => {
+      //发送input组件创建事件
+      emitter.emit("validate-create", validateInput);
+    });
 
     return {
       inputRef,

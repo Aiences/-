@@ -12,13 +12,16 @@
       >我是一个弹框</Model
     >
     <button @click="openModel">打开弹框</button>
+    {{obj}}
   </div>
 </template>
 
 <script lang="ts">
-import { ref, computed, reactive, toRefs } from "vue";
+import { ref, computed, reactive, toRefs, defineComponent } from "vue";
 import useMousePosition from "@/hooks/useMousePosition";
 import Model from "@/components/Model.vue"
+import { useStore } from "vuex";
+
 
 interface DataProps {
   count: number;
@@ -29,7 +32,7 @@ interface DataProps {
     name?: string;
   };
 }
-export default {
+export default defineComponent( {
   name: "Home",
   components: {
     Model
@@ -47,6 +50,9 @@ export default {
     //ref 与 reactive 使用原则
     //1.ref的参数为原始值类型；reactive 的参数可以为任意类型
     //2.reactive 必须与toRefs 一起使用，才能输出响应式对象
+    
+    const store = useStore()
+    const obj = store.getters.getItemById(1)
 
     const { x, y } = useMousePosition();
 
@@ -81,8 +87,9 @@ export default {
       y,
       isOpenModel,
       openModel,
-      closeModel
+      closeModel,
+      obj
     };
   },
-};
+});
 </script>

@@ -28,6 +28,8 @@
 import ValidateInput, { RulesProp } from "@/components/ValidateInput.vue";
 import { defineComponent, reactive, ref } from "vue";
 import ValidateForm from "@/components/ValidateForm.vue";
+import { useStore } from "vuex";
+import router from "@/router";
 
 export default defineComponent({
   components: { ValidateInput, ValidateForm },
@@ -57,8 +59,14 @@ export default defineComponent({
       },
     ];
 
+    const store = useStore();
+
     const doSubmit = (val: boolean) => {
-      console.log(val, "========");
+      //登录成功
+      if (val) {
+        store.commit("login");
+        router.push("/about");
+      }
     };
 
     return {
